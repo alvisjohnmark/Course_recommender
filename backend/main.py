@@ -4,21 +4,12 @@ from sentence_transformers import SentenceTransformer
 import faiss
 from fastapi.responses import PlainTextResponse
 import numpy as np
-from fastapi.middleware.cors import CORSMiddleware
 import asyncio
 import httpx
 import logging
 
 
 app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 # Load sentence transformer model
 model = SentenceTransformer('all-MiniLM-L6-v2')

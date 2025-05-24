@@ -6,9 +6,8 @@ import {
   Sparkles,
   X,
   ArrowRight,
-  Star,
-  Clock,
   Award,
+  Lightbulb,
 } from "lucide-react";
 
 function App() {
@@ -28,7 +27,6 @@ function App() {
       });
 
       const data = await res.json();
-
       setRecommendations(
         data.recommendations.map((course) => ({
           title: course.title,
@@ -53,126 +51,105 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-4 -left-4 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-        <div className="absolute -bottom-8 -right-4 w-96 h-96 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse delay-500"></div>
-      </div>
-
-      <div className="relative z-10 container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-[#f9fafb] text-gray-800">
+      <div className="container mx-auto px-4 py-12">
         {/* Header */}
-        <div className="text-center mb-12 pt-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-2xl mb-6 shadow-2xl">
-            <BookOpen className="w-10 h-10 text-white" />
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-full mb-4">
+            <Lightbulb className="w-8 h-8" />
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight">
-            Course
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent ml-3">
-              Matcher
-            </span>
-          </h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Discover personalized learning paths tailored to your interests and
-            career goals
+          <h1 className="text-4xl font-bold mb-2">Course Matcher</h1>
+          <p className="text-gray-600 text-lg max-w-xl mx-auto">
+            Discover personalized learning paths to your interests, hobbies and
+            career goals.
           </p>
         </div>
 
-        {/* Search Section */}
-        <div className="max-w-4xl mx-auto mb-16">
-          <div className="bg-white/10 backdrop-blur-2xl rounded-3xl p-8 shadow-2xl border border-white/20">
-            <div className="flex flex-col space-y-6">
-              <div className="relative">
-                <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" />
-                <input
-                  type="text"
-                  value={interests}
-                  onChange={(e) => setInterests(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Tell us about your interests... (e.g., web development, design, photography)"
-                  className="w-full pl-16 pr-6 py-6 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-purple-400/30 focus:border-purple-400/50 text-lg backdrop-blur-sm transition-all duration-300"
-                />
-              </div>
+        {/* Search */}
+        <div className="max-w-3xl mx-auto mb-12">
+          <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 space-y-4">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                value={interests}
+                onChange={(e) => setInterests(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Tell us your interests (e.g., AI, marketing, design)"
+                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
 
-              <div className="flex gap-4">
-                <button
-                  onClick={handleSearch}
-                  disabled={!interests.trim() || isLoading}
-                  className="flex-1 bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 disabled:from-gray-500 disabled:to-gray-600 text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl disabled:hover:scale-100 disabled:hover:shadow-none flex items-center justify-center space-x-3 text-lg"
-                >
-                  {isLoading ? (
-                    <>
-                      <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span>Finding Courses...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles className="w-6 h-6" />
-                      <span>Get Recommendations</span>
-                      <ArrowRight className="w-5 h-5" />
-                    </>
-                  )}
-                </button>
+            <div className="flex gap-4">
+              <button
+                onClick={handleSearch}
+                disabled={!interests.trim() || isLoading}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {isLoading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Finding...</span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-5 h-5" />
+                    <span>Get Recommendations</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
+              </button>
 
-                <button
-                  onClick={handleClear}
-                  className="bg-white/10 hover:bg-white/20 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] border border-white/20"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
+              <button
+                onClick={handleClear}
+                className="bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold py-3 px-4 rounded-lg flex items-center justify-center"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Results Section */}
+        {/* Results */}
         {recommendations.length > 0 && (
           <div className="max-w-6xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl font-bold text-white flex items-center">
-                <Award className="w-8 h-8 mr-3 text-cyan-400" />
-                Recommended for You
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold flex items-center gap-2">
+                <Award className="w-6 h-6 text-blue-600" />
+                Recommended Courses
               </h2>
-              <div className="text-gray-300 bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
-                Top {recommendations.length} courses
-              </div>
+              <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                {recommendations.length} suggestions
+              </span>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {recommendations.map((course, index) => (
                 <div
                   key={index}
-                  className="bg-white/10 backdrop-blur-2xl rounded-3xl p-6 shadow-2xl border border-white/20 hover:bg-white/15 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-3xl group"
-                  style={{
-                    animationDelay: `${index * 150}ms`,
-                  }}
+                  className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition"
                 >
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors duration-300">
+                  <h3 className="text-lg font-semibold mb-2 text-blue-800">
                     {course.title}
                   </h3>
-
-                  <h4 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors duration-300">
-                    {course.description}
-                  </h4>
+                  <p className="text-gray-600 text-sm">{course.description}</p>
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* Empty state when no search yet */}
+        {/* Empty State */}
         {recommendations.length === 0 && !isLoading && (
-          <div className="text-center py-16">
-            <div className="w-32 h-32 bg-gradient-to-r from-cyan-400/20 to-purple-400/20 rounded-full flex items-center justify-center mx-auto mb-8 backdrop-blur-sm border border-white/10">
-              <Search className="w-16 h-16 text-gray-400" />
+          <div className="text-center mt-20">
+            <div className="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-6">
+              <Search className="w-10 h-10 text-gray-400" />
             </div>
-            <h3 className="text-2xl font-semibold text-gray-300 mb-4">
-              Ready to discover your next course?
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">
+              Ready to explore courses?
             </h3>
-            <p className="text-gray-400 max-w-md mx-auto">
-              Enter your interests above and we'll recommend personalized
-              courses just for you
+            <p className="text-gray-500">
+              Type your interests and get tailored learning recommendations.
             </p>
           </div>
         )}
