@@ -7,10 +7,18 @@ import numpy as np
 import asyncio
 import httpx
 import logging
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # Load sentence transformer model
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
